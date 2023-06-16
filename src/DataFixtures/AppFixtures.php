@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Note;
+use App\Entity\User;
 use App\Entity\Category;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -11,6 +12,12 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
+        $admin = new User();
+        $admin->setEmail('hey@nx.fr');
+        $admin->setRoles(['ROLE_ADMIN']);
+        $admin->setPassword('$2y$13$5PoNR5ef6FWhG2/CiB4qYO1Val4dWj3kX0tAt/00ohjw5omq.k6Qy');
+        $manager->persist($admin);
+
         $notes = [
             [
                 'title' => 'Introduction to Web Development',
@@ -58,6 +65,7 @@ class AppFixtures extends Fixture
             $note = new Note();
             $note->setTitle($item['title']);
             $note->setContent($item['content']);
+            $note->setUser($admin);
             $manager->persist($note);
         }
 

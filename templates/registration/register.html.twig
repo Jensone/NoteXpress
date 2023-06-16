@@ -1,23 +1,61 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Register
+{% endblock %}
 
 {% block body %}
-    {% for flash_error in app.flashes('verify_email_error') %}
-        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-    {% endfor %}
+	{% for flash_error in app.flashes('verify_email_error') %}
+		<div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+	{% endfor %}
 
-    <h1>Register</h1>
 
-    {{ form_errors(registrationForm) }}
+	<div class="row align-items-center justify-content-center">
+		{{ form_errors(registrationForm,
+            {
+                'alert': 'danger',
+                'attr': {
+                    'class': 'alert alert-danger'
+                }
+            }
+        )}}
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+		<h1 class="h3 mb-3 font-weight-normal text-center">Create your account</h1>
+		{{ form_start(registrationForm, {
+                "attr": {
+                    "class": "col-md-6 border p-3"
+                }
+            }) 
+        }}
+		<div class="mb-3 register_form">
+			{{ form_row(registrationForm.email, {
+                    "label": "",
+                    "required": true,
+                    "attr": {
+                        "placeholder": "john.doe@gmail.com"
+                    },
+                    "params": {
+                        "container_attr": {
+                        "class": "p-2 rounded"
+                        }
+                    }
+                }) 
+            }}
+		</div>
+		<div class="mb-3 register_form">
+			{{ form_row(registrationForm.plainPassword, {
+                    label: 'Password'
+                }) 
+            }}
+		</div>
+		<div class="mb-3 register_form">
+			{{ form_row(registrationForm.agreeTerms, {
+                    "label": "Agree to terms",
+                    "required": true
+                }) 
+            }}
+		</div>
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+		<button type="submit" class="btn btn-primary">Register</button>
+		{{ form_end(registrationForm) }}
+	</div>
 {% endblock %}
